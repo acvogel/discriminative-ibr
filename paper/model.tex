@@ -1,0 +1,108 @@
+Our model relies on iterated \emph{self-training}, alternating
+between discriminatively training the listener and the speaker.  This
+method requires no generative model of the context or messages, but
+rather only a shallow feature vector representation.  Furthermore,
+there is no explicit recursive reasoning procedure of the sort common
+in the generative approaches discussed above.  At evaluation time, our
+trained listener simply generates features for the problem and
+utterance, and computes the model activation for each possible target.
+
+Algorithm~\ref{alg:selftrain} describes the training algorithm. It
+takes as input a set of reference games $\mathbb{G}$, and a number of
+training iterations to perform, $N$.  Starting with the literal
+speaker, we train a listener using the input reference games and the
+speaker (Algorithm~\ref{alg:train-listener}). Then, using this newly
+trained listener, we retrain the speaker
+(Algorithm~\ref{alg:train-speaker}), using the current listener to
+create training data.  We use an artificial neural network (ANN) as
+the discriminative classifier, but other learning algorithms would
+work as well.  This procedure repeats for $N$ iterations, yielding a
+self-trained ANN listener and speaker.
+
+To train a listener (Algorithm~\ref{alg:train-listener}), we use a
+speaker $S$ to generate training data as follows.  For each reference
+game $G \in \mathbb{G}$, and for each target $t \in T$, we query the
+speaker to get the speaker's chosen message $m = S(G,t)$.  We then
+form a training set in which the input features are games combined
+with messages and the gold label is the target $t$ that the speaker
+intended to refer to. The listener ANN uses a simple feature
+representation: a binary feature for the presence or absence of each
+feature for each target, and also a binary feature for each possible
+message. For three targets, three properties, and three utterances,
+this yields twelve binary features. The listener ANN has three
+outputs, one per target. Given a reference game and a message, the
+listener selects the target corresponding to the highest output
+activation.
+
+The training procedure for speakers
+(Algorithm~\ref{alg:train-speaker}) proceeds similarly. For each
+reference game $G \in \mathbb{G}$ and for each target $t \in T$, we
+query the listener to determine whether there is a message $m$ that
+the listener interprets as target $t$.  If so, we add a training
+example with $(G, t)$ as the features and $m$ as the label.  For some
+listeners, there is no message it interprets as a particular target,
+so we do not add those to the training set.
+
+The listener and speaker ANNs have the same structure: a
+fully-connected network with 12 input features, one a hidden layer 
+whose size we vary in the experiments, and 3 output nodes. The models 
+are trained with back propagation \citep{Rumelhart-etal:1986}, using 
+the PyBrain library \citep{Schaul:2010:PYB:1756006.1756030}.
+
+
+\begin{algorithm}
+{\bf Algorithm: }SelfTrain\\
+\KwIn {Reference games $\mathbb{G}$, Number of iterations $N$}
+\KwOut{Listener $L$}
+Initialize $S = S_0$\\
+\For {i from $1$ to $N$} {
+$L = TrainListener(\mathbb{G}, S)$\\
+$S = TrainSpeaker(\mathbb{G}, L)$\\
+}
+\Return {$L$}\\
+~\\
+\caption{Train listener and speaker ANNs for a given number of iterations, starting from the literal speaker $S_0$.}
+\label{alg:selftrain}
+\end{algorithm}
+
+\vspace{-12pt}
+
+\begin{algorithm}
+{\bf Algorithm: }TrainListener\\
+\KwIn {Reference games $\mathbb{G}$, Speaker $S$}
+\KwOut{Listener $L$}
+Initialize training data $X = Y = \emptyset$\\
+\ForEach{Reference game $G = (T,M) \in \mathbb{G}$} {
+  \ForEach{Target $t \in T$} {
+    $m = S(G,t)$\\
+    Append $(G,m)$ to $X$\\
+    Append $t$ to $Y$\\
+  }
+}
+\Return{$\text{ANN-Train}(X,Y)$}\\
+~\\
+\caption{Train a listener ANN from a given speaker.}
+\label{alg:train-listener}
+\end{algorithm}
+
+\begin{algorithm}
+{\bf Algorithm:} TrainSpeaker\\
+\KwIn {
+  Reference games $\mathbb{G}$, Listener $L$
+}
+\KwOut{Speaker $S$}
+Initialize training data $X = Y = \emptyset$\\
+\ForEach{Reference game $G = (T,M) \in \mathbb{G}$} {
+  \ForEach{Target $t \in T$} {
+    \If {$\exists m$ such that $L(G,m) = t$} {
+      Append $(G,t)$ to $X$\\
+      Append $m$ to $Y$\\
+    }
+  }
+}
+\Return {$\text{ANN-Train}(X,Y)$}\\
+~\\
+\caption{Train a speaker ANN from a given listener.}
+\label{alg:train-speaker}
+\end{algorithm}
+

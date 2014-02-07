@@ -1,0 +1,111 @@
+% 
+% Annual Cognitive Science Conference
+% Sample LaTeX Paper -- Proceedings Format
+% 
+
+% Original : Ashwin Ram (ashwin@cc.gatech.edu)       04/01/1994
+% Modified : Johanna Moore (jmoore@cs.pitt.edu)      03/17/1995
+% Modified : David Noelle (noelle@ucsd.edu)          03/15/1996
+% Modified : Pat Langley (langley@cs.stanford.edu)   01/26/1997
+% Latex2e corrections by Ramin Charles Nakisa        01/28/1997 
+% Modified : Tina Eliassi-Rad (eliassi@cs.wisc.edu)  01/31/1998
+% Modified : Trisha Yannuzzi (trisha@ircs.upenn.edu) 12/28/1999 (in process)
+% Modified : Mary Ellen Foster (M.E.Foster@ed.ac.uk) 12/11/2000
+% Modified : Ken Forbus                              01/23/2004
+% Modified : Eli M. Silk (esilk@pitt.edu)            05/24/2005
+% Modified: Niels Taatgen (taatgen@cmu.edu) 10/24/2006
+
+%% Change ``a4paper'' in the following line to ``letterpaper'' if you are
+%% producing a letter-format document.
+
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{cogsci}
+\usepackage{pslatex}
+\usepackage{apacite}
+\usepackage{graphicx}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage{algorithm2e}
+\usepackage{sidecap}
+\usepackage[figbotcap,tight,TABBOTCAP]{subfigure}
+
+\usepackage{stmaryrd}
+\newcommand{\sem}[1]{\ensuremath{\llbracket#1\rrbracket}}
+
+\newcommand{\Gsep}{\mathbb{G}_{\text{sep}}}
+
+\title{Learning to Reason Pragmatically with Cognitive Limitations}
+ 
+\newcommand{\email}[1]{\texttt{#1}}
+
+\author{
+  {\large\textbf{Adam Vogel}}\\ 
+  \email{acvogel@stanford.edu}\\
+  Stanford Computer Science\\
+  %Department of Computer Science\\
+  %Stanford University
+  \And 
+  {\large\textbf{Andr{\'e}s Gom{\'e}z Emilsson}}\\
+  \email{nc07agom@stanford.edu}\\
+  Stanford Psychology
+  %Department of Psychology\\
+  % Stanford University
+  \And 
+  {\large\textbf{Michael C.~Frank}}\\
+  \email{mcfrank@stanford.edu}\\
+  Stanford Psychology\\
+  %Department of Psychology\\
+  %Stanford University
+  \AND
+  {\large\textbf{Dan Jurafsky}}\\
+  \email{jurafsky@stanford.edu}\\
+  Stanford Linguistics\\
+  %Department of Linguistics\\
+  %Stanford University
+  \And
+  {\large\textbf{Christopher Potts}}\\
+  \email{cgpotts@stanford.edu}\\
+  Stanford Linguistics\\
+  %Department of Linguistics\\
+  %Stanford University
+}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+\input{abstract}
+
+%\textbf{Keywords:} 
+%Add your choice of indexing terms or keywords; kindly use a semi-colon; between each term.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+\input{intro}
+
+\section{Reference Games}\label{sec:refgames}
+\input{refgames}
+
+\section{Discriminative Best Response}\label{sec:model}
+\input{model}
+
+\section{Simulations with Synthetic Data}
+\input{synthetic}
+
+% \section{Human Subject Experiments}
+\input{forced-choice}
+
+\section{Conclusion}
+\input{conclusion}
+
+
+\bibliographystyle{apacite}
+\setlength{\bibleftmargin}{.125in}
+\setlength{\bibindent}{-\bibleftmargin}
+\bibliography{potts-bib-database}
+\end{document}

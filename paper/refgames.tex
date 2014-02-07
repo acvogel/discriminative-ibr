@@ -1,0 +1,53 @@
+Figure~\ref{fig:scalesStimulus} depicts a reference game
+scenario. There are three potential referents (A, B, and C), each with
+a pre-specified set of properties (wearing glasses, wearing a hat,
+having a mustache). The \emph{speaker} is privately assigned one of
+the referents. Using a message from a pre-defined vocabulary, the
+speaker tries to convey the identity of this referent to the
+\emph{listener}. The listener uses the message to choose one of the
+referents. Intuitively, the two participants' goals are aligned: they
+win just in case the speaker's referent is the hearer's choice.
+
+\begin{figure}[ht]
+  \centering
+  % \includegraphics[width=\columnwidth]{fig/facesScales.png}
+  \includegraphics[width=0.7\columnwidth]{fig/refgame-sample}
+
+  \vspace{-4pt}
+  
+  A\hspace{55pt}B\hspace{55pt}C
+  \caption{Scenario for a simple reference game.}
+  \label{fig:scalesStimulus}
+\end{figure}
+
+\subsection{Definition}
+Formally, a reference game is a tuple $G = (M,T,\sem{\cdot})$, where
+$T$ is the set of targets, $M$ is the set of messages, and
+$\sem{\cdot} : M \to 2^{T}$ is the semantics of the messages, which
+dictates which targets each message is true of.  A speaker $S$ is a
+(possibly stochastic) function $G \times T \to M$ from a game and
+target to a message. Similarly, a listener $L$ is a function $G \times
+M \to T$ from a game and a message to a target.  For a given run of a
+game $G$ and target $t$, the speaker produces the message $m =
+S(G,t)$, the listener selects a target $t' = L(G,m)$, and they win iff
+$t = t'$.
+
+\subsection{Literal Speaker and Listener}
+To initialize the learning procedure described in the next section, we
+define literal speakers and listeners, who rely entirely on the
+semantics of the messages, with no consideration of the other
+participant's behavior. The literal speaker $S_{0}$, when given a
+target to refer to, picks uniformly at random from messages which are
+true of the target:
+%
+\begin{equation}
+S_{0}(G,t)  = \text{Uniform}\left(\{m \vert t \in \sem{m}\}\right)
+\end{equation}
+%
+Similarly, the literal listener $L_0$, when given a message $m$, picks
+randomly from targets in the semantics of the message:
+%
+\begin{equation}
+L_{0}(G,m) = \text{Uniform}\left(\{t \vert t \in \sem{m}\}\right)
+\end{equation}
+

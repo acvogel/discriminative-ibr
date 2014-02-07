@@ -1,0 +1,64 @@
+Recursive Bayesian models of language production and comprehension
+capture a variety of intricate phenomena concerning context dependence 
+and pragmatic enrichment 
+\citep{Jaeger:2007,
+Franke09DISS,
+Frank:Goodman:2012,
+Bergen:Goodman:Levy:2012,
+Vogel-etal:2013,
+Smith:Goodman:Frank:2013}.
+In these models, speakers and listeners reason about each other
+recursively in order to achieve ever more optimal communication
+systems. These approaches offer precise, algorithmic perspectives on
+philosophical and linguistic theories of communication
+\citep{Lewis69,Grice75,Horn84}, and they make robust predictions about
+experimental data
+\citep{Stiller:Goodman:Frank:2011,Rohde-etal:2012,Degen-etal:2013}.
+
+Despite the success of these models, they raise concerns about
+inferential power, in that they assume that the agents are
+invariably optimal reasoners with unbounded computational resources.
+These concerns can be mitigated by stipulations about depth of
+iteration \citep{CamererHo:2004,Franke09DISS,Jaeger:2007,Jaeger:2011}, but the
+models remain computationally demanding and powerful.
+
+We seek to capitalize on the insights of these approaches while
+addressing these concerns. We define a discriminative model of
+pragmatic reasoning that requires no explicit representation of the
+context. Rather, it relies only on features of the environment and
+language. In addition, the recursive aspects of the model are limited
+to training: we employ a \emph{self-training} regime in which,
+starting with basic models of the speaker and the hearer, we use the
+speaker to generate supervised training data for the listener, and
+vice versa. Once this phase is complete, the model makes decisions
+without any recursion. The models are both more efficient and more
+fallible than the above generative ones. 
+
+Our model also offers a way to reconcile previous explanations of the
+interpretation or production of pragmatically complex utterances:
+slowly via complex recursive inferences made as each sentence is
+processed, \citep{Geurts09,Huang:Snedeker:2009} or quickly via
+inferences that are pre-compiled and cached based on previous
+interactions
+\citep{Levinson00,Grodner-etal:2010,Smith:Goodman:Frank:2013}. Instead,
+our discriminatively-trained model instantiates a third possibility,
+extending \citealt{Jurafsky04}: learning to directly map surface
+linguistic cues to speaker intent. Like the interpretive models, a
+learned model explains how context-sensitive inferences could be drawn
+at communication time; like the cached models, it explains why
+processing could be fast and direct.
+
+Our central question is whether our model's behavior matches human
+performance across a wide range of situations. To address this, we use
+collaborative reference games
+\citep{Rosenberg:Cohen:1964,Clark:Wilkes-Gibbs:1986,DeVault-etal:2005}
+in which a speaker refers to an object in a shared visual scene and
+the listener uses the speaker's message to try to guess the intended
+referent. By manipulating the properties of the scene and the
+speaker's available messages, we can ensure that pragmatic reasoning,
+of various levels of complexity, is required for reliable success. We
+report several experiments that seek to identify the bounds on human
+performance in these reference games, and we compare human performance
+to our model, showing that its inferences closely align with human
+performance.
+
