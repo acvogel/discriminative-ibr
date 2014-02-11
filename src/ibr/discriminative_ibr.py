@@ -282,7 +282,7 @@ def syntheticHiddenPlot():
   matplotlib.rcParams.update({'font.size' : 20})
   lw = 3
   plt.hold(True)
-  levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2]]
+  levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2]]
   sizes = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80]
   nModels = 10 # numbered 1 to 10
   agents = [] # will be an array of arrays, one entry per hidden node, one entry per training iteration
@@ -290,7 +290,7 @@ def syntheticHiddenPlot():
   for size in sizes:
     sizeAgents = []
     for agentNum in range(1,nModels + 1):
-      (listeners, speakers) = loadAllAgents('data/cogsci/agents-%d-%d.pickle' % (size, agentNum))
+      (listeners, speakers) = loadAllAgents('../../data/cogsci/agents-%d-%d.pickle' % (size, agentNum))
       sizeAgents.append(listeners)
     agents.append(sizeAgents)
   # loop over levels, then over model sizes, then over agents..
@@ -344,7 +344,7 @@ def scalesHiddenPlot(name='scales'):
   for size in sizes:
     sizeAgents = []
     for agentNum in range(1,nModels + 1):
-      (listeners, speakers) = loadAllAgents('data/cogsci/agents-%d-%d.pickle' % (size, agentNum))
+      (listeners, speakers) = loadAllAgents('../../data/cogsci/agents-%d-%d.pickle' % (size, agentNum))
       sizeAgents.append(listeners)
     agents.append(sizeAgents)
   for (levelProblems, lineColor) in zip(leveledFcData, colors):
@@ -382,7 +382,7 @@ def ibrSyntheticPlot():
   plt.hold(True)
   for level, lineColor in zip([0,1,2], colors):
     # load data
-    f = open('data/Rsynthetic-%d.txt' % level)
+    f = open('../../data/Rsynthetic-%d.txt' % level)
     accuracies = [] # array of arrays
     for line in f:
       probs = [float(x) for x in str.split(line)]
@@ -483,9 +483,9 @@ def syntheticMultiExperiments(agentPrefix, nAgents, overall=False, errorBars=Fal
     (listeners, speakers) = loadAllAgents(agentPath)
     agents.append(listeners)
   if overall:
-    levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2,3]]
+    levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2,3]]
   else:
-    levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2]]
+    levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2]]
   allAccuracies = [] # will end up with one per level
   allActivations = []
   allScores = []
@@ -520,9 +520,9 @@ def batchSyntheticExperiments(agentPrefix, nAgents, overall=False, errorBars=Tru
     agentPath = '%s%d.pickle' % (agentPrefix, i)
     (listeners, speakers) = loadAllAgents(agentPath)
     if overall:
-      levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2,3]]
+      levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2,3]]
     else:
-      levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2]]
+      levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2]]
     allAccuracies = []
     allActivations = []
     allScores = []
@@ -551,9 +551,9 @@ def syntheticExperiments(agentPath, overall=False, errorBars=False):
   """
   (listeners, speakers) = loadAllAgents(agentPath)
   if overall:
-    levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2,3]]
+    levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2,3]]
   else:
-    levelInstances = [loadFacesInstances('data/facesInstances-%d.csv' % level) for level in [0,1,2]]
+    levelInstances = [loadFacesInstances('../../data/facesInstances-%d.csv' % level) for level in [0,1,2]]
   allAccuracies = []
   allActivations = []
   allScores = []
@@ -577,10 +577,10 @@ def syntheticExperiments(agentPath, overall=False, errorBars=False):
 def forcedChoiceMultiExperiments(agentPrefix, nAgents, plotPath, name='scales', errorBars=False):
   if name == 'scalesPlus':
     condition = 'Complex'
-    leveledFcData = turk.readScalesProblems('data/scale_plus_6stimuli_3levels_no_fam_24_january_SCAL.csv', name)
+    leveledFcData = turk.readScalesProblems('../../data/scale_plus_6stimuli_3levels_no_fam_24_january_SCAL.csv', name)
   elif name == 'scales':
     condition = 'Simple'
-    leveledFcData = turk.readScalesProblems('data/scales_6stimuli_3levels_no_fam_25_january_OSCA.csv', name)
+    leveledFcData = turk.readScalesProblems('../../data/scales_6stimuli_3levels_no_fam_25_january_OSCA.csv', name)
   else:
     print '[forcedChoiceExperiments] Unknown experiment name: ', name
   agents = [] # list of list of listeners, where agents[i] is each independent trained list of agents, so for instance agents[0][0] would be the 1st agent trained on 1 iteration.
@@ -644,9 +644,9 @@ def RPlot(fName, outName):
 def forcedChoiceExperiments(agentPath, plotPath, name='scales', errorBars=False):
   """ name can be 'scales' or 'scalesPlus' """
   if name == 'scalesPlus':
-    leveledFcData = turk.readScalesProblems('data/scale_plus_6stimuli_3levels_no_fam_24_january_SCAL.csv', name)
+    leveledFcData = turk.readScalesProblems('../../data/scale_plus_6stimuli_3levels_no_fam_24_january_SCAL.csv', name)
   elif name == 'scales':
-    leveledFcData = turk.readScalesProblems('data/scales_6stimuli_3levels_no_fam_25_january_OSCA.csv', name)
+    leveledFcData = turk.readScalesProblems('../../data/scales_6stimuli_3levels_no_fam_25_january_OSCA.csv', name)
   else:
     print '[forcedChoiceExperiments] Unknown experiment name: ', name
   (listeners, speakers) = loadAllAgents(agentPath)
@@ -781,7 +781,7 @@ if __name__ == '__main__':
     outPath = sys.argv[2]
     nIterations = int(sys.argv[3])
     hiddenNodes = [int(n) for n in sys.argv[4:]]
-    trainAllAgents('data/facesInstances.csv', outPath, hiddenNodes, nIterations)
+    trainAllAgents('../../data/facesInstances.csv', outPath, hiddenNodes, nIterations)
   elif len(sys.argv) > 2 and sys.argv[1] == 'eval' and len(sys.argv) == 3:
     syntheticExperiments(sys.argv[2], overall=False, errorBars=True)
     forcedChoiceExperiments(sys.argv[2], 'scales.pdf', name='scales', errorBars=False)
@@ -792,8 +792,8 @@ if __name__ == '__main__':
     forcedChoiceMultiExperiments(sys.argv[2], int(sys.argv[3]), 'scalesPlus.pdf', name='scalesPlus', errorBars=True)
   elif len(sys.argv) == 2 and sys.argv[1] == 'ibr':
     ibrSyntheticPlot()
-    RPlot('data/Rscales.txt', 'IBRscales.pdf')
-    RPlot('data/RscalesPlus.txt', 'IBRscalesPlus.pdf')
+    RPlot('../../data/Rscales.txt', 'IBRscales.pdf')
+    RPlot('../../data/RscalesPlus.txt', 'IBRscalesPlus.pdf')
   elif len(sys.argv) == 2 and sys.argv[1] == 'hidden':
     syntheticHiddenPlot()
     scalesHiddenPlot('scalesPlus')
