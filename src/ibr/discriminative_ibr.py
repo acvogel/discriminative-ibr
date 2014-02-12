@@ -16,7 +16,7 @@ from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import FeedForwardNetwork, LinearLayer, SigmoidLayer, FullConnection
 import scikits.bootstrap as boot
 
-numFeatures = 9
+numFeatures = 12 # 9 face features, 3 features for utterance (listener) or target (speaker)
 numFaces = 3
 numProperties = 3
 colors = [matplotlib.colors.hex2color(color) for color in ['#83ff0d', '#1700ff', '#ff460d']]
