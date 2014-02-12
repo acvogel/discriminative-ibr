@@ -770,11 +770,11 @@ def loadFacesInstances(fname):
   return instances 
 
 def usage():
-  print "./discriminative_ibr.py train <outFile> <iterations> <hidden nodes+>"
-  print "./discriminative_ibr.py eval <agentFile>"
-  print "./discriminative_ibr.py ibr" #produces ibr plot
-  print "./discriminative_ibr.py hidden" #produces hidden layer plot
-  print "./discriminative_ibr.py multieval <agentPrefix> <nAgents> " # ex ./faces.py multieval data/cogsci/agents-20- 10
+  print "./discrim_ibr.py train <outFile> <iterations> <hidden nodes+>"
+  print "./discrim_ibr.py eval <agentFile>"
+  print "./discrim_ibr.py ibr" #produces ibr plot
+  print "./discrim_ibr.py hidden" #produces hidden layer plot
+  print "./discrim_ibr.py multieval <agentPrefix> <nAgents> " # ex ./discrim_ibr.py multieval data/cogsci/agents-20- 10
   
 if __name__ == '__main__':
   if len(sys.argv) > 2 and sys.argv[1] == 'train' and len(sys.argv) >= 5:
