@@ -1,5 +1,6 @@
 #!/usr/bin/python
 __author__ = "Adam Vogel"
+__email__ = "acvogel@gmail.com"
 
 import numpy as np
 import csv
