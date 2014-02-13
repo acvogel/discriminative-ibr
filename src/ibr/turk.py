@@ -1,4 +1,5 @@
 #!/usr/bin/python
+__author__ = "Adam Vogel"
 
 import numpy as np
 import csv
