@@ -1,0 +1,257 @@
+
+
+Click on the Christmas tree you think is Bob's favorite.
+
+You have $100 you can use to bet on the sundaes you think may be Bob's favorite, by distributing your $100 among the options. In other words, distribute the money among the options according to how likely you think each option is to be Bob's favorite. Make sure your bets add to $100.
+
+Original version:
+You have $100 you can use to bet on the friends you think may be Bob's favorite, by distributing your $100 among the options. In other words, distribute the money among the options according to how likely you think each option is Bob's favorite. Make sure your bets add to $100.
+
+
+Edited version (after the first two rounds of experiments):
+You have $100 you can use to bet on the friends you think may be Bob's favorite: Distribute your $100 among the options by how likely you think that each of the options is Bob's favorite. (Make sure your bets add to $100).
+
+In a scale from 1 to 7, for each friend choose the level of confidence that you have that it is Bob's favorite. Here 1 means "very confident that it is not his favorite", 7 means "very confident that it is his favorite" and 4 means that you are not sure one way or the other.
+
+
+Bob can only say one word [to communicate with you]
+
+Start with the level 1 matrix
+
+
+[1]: http://www.last.fm/user/davidpearce/library
+[2]: http://www.youtube.com/watch?v=QbBBczzDeCA
+[3]: http://www.spiegel.de/international/world/the-pain-of-listening-using-music-as-a-weapon-at-guantanamo-a-672177.html
+[4]: http://www.youtube.com/watch?v=psAEKsABSB4
+[5]: http://www.abolitionist.com/multiverse.html
+
+
+MTURK_CMD_HOME environment variable
+
+path = /Users/andesgomez/Documents/Stanford/Autumn2013-Masters/PayedWork
+
+
+export JAVA_HOME=/Library/Java/Home
+export MTURK_CMD_HOME=/Users/andesgomez/Documents/Stanford/Autumn2013-Masters/PayedWork/aws-mturk-clt-1.3.1
+
+
+scp -r images nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+
+
+
+scp * nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+scp *_c1* nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+
+### Targeted changes ###
+scp settings_c1.txt nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+scp pragmods_parameter_setter_c1.js nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+scp pragmods_control_flow_c1.js nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% What you do and in what order %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	0) If necessary set the Java stuff:
+
+export JAVA_HOME=/Library/Java/Home
+
+	1) Add to the experiment_timeline doc what you will do
+
+	2) change the variables in parameter_setter
+
+	3) change the variables in settings_c1.txt
+
+	4) Run the submiterator
+
+python submiterator.py settings_c1.txt
+
+	5) Update the code online
+
+	### Updating All ### (or just part, if you want)
+scp * nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+	## If you only changed that one file, then:
+scp pragmods_parameter_setter_c1.js nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+
+	6) Post the HIT
+
+sh pragmods_c1-postHIT.sh
+
+	7) Retreive the results
+
+sh pragmods_c1-getResults.sh
+
+	8) Add to experiment timeline the info you get. 
+
+	9) Take pragmods_c1.results.tst and make a copy of it where you want it and rename it there with a good description
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+This is the error message when trying to fetch the results
+
+Error retrieving HIT results for HIT 1/1 (27A1CSTMOFXRWLAI865YJNXL74ZPSX): Error #1 for RequestId: b560ba15-d599-49c6-8569-52740110a212 - AWS.MechanicalTurk.HITDoesNotExist: Hit 27A1CSTMOFXRWLAI865YJNXL74ZPSX does not exist. (1384215125354 s)
+com.amazonaws.mturk.service.exception.ObjectDoesNotExistException: Error #1 for RequestId: b560ba15-d599-49c6-8569-52740110a212 - AWS.MechanicalTurk.HITDoesNotExist: Hit 27A1CSTMOFXRWLAI865YJNXL74ZPSX does not exist. (1384215125354 s)
+	at com.amazonaws.mturk.filter.ErrorProcessingFilter.processErrors(ErrorProcessingFilter.java:105)
+	at com.amazonaws.mturk.filter.ErrorProcessingFilter.execute(ErrorProcessingFilter.java:48)
+	at com.amazonaws.mturk.filter.Filter.passMessage(Filter.java:56)
+	at com.amazonaws.mturk.filter.RetryFilter.execute(RetryFilter.java:115)
+	at com.amazonaws.mturk.filter.Filter.passMessage(Filter.java:56)
+	at com.amazonaws.mturk.util.CLTExceptionFilter.sendMessage(CLTExceptionFilter.java:77)
+	at com.amazonaws.mturk.util.CLTExceptionFilter.execute(CLTExceptionFilter.java:62)
+	at com.amazonaws.mturk.service.axis.AsyncRequest.call(AsyncRequest.java:64)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+--[Done Retrieving Results]----------
+Could not retrieve work successfully
+~/Documents/Stanford/Autumn2013-Masters/PayedWork/pragmods/cleanPragmods
+rescomp-13-221757:cleanPragmods andesgomez$ 
+
+
+
+
+
+
+
+Comments:
+
+Some people have reported problems.
+
+Cutting the names to 16 characters or less
+Trying standarized (not upper case or anything)
+
+BOTO python library for interfacing with amazon stuff
+
+
+########## Hit IDS in Sandbox #############
+2LKJ1LY58B72QF6ICKBHG16YR54S77
+24BL0XULRGNTUC9MIIO5IP7NIFU4QB
+
+
+########## Hit IDS LIVE #############
+
+
+
+
+
+
+#########################
+c1 November 10th 2013
+The condition without base rates
+No familiarization slide at all. No previous reference to Bob
+"Take a look at these friends!"
+label_html += '<p class="block-text">You have $100 you can use to bet on the friends you think may be Bob\'s favorite: Distribute your $100 among the options by how likely you think that each of the options is Bob\'s favorite. (Make sure your bets add to $100).</p>';
+
+This that causes turkers to distribute bets almost equally between the target and the logical:
+
+########################
+c1 November 17th 2013
+Familiarization does include: 
+"Meet Bob:  Bob
+Bob really likes to visit friends. 
+Every Sunday he chooses to visit a friend."
+The test slide has "Take a look at these friends Bob has visited!"
+
+
+You have $100 you can use to bet on the friends you think may be Bob's favorite. Distribute your $100 among the options by how likely you think that each of the options is Bob's favorite. (Make sure your bets add to $100).
+
+
+Tentative future wording:
+You have $100 you can use to bet on Bob's friends by how likely you think each one of them is Bob's favorite. Distribute your $100 in the fields below the options by how likely you think that each of the options is Bob's favorite. (Make sure your bets add to $100).
+
+
+
+
+
+
+## Include image of Bob in the check question
+## Increase the font size of Bob
+## Labeling the stimulus as A,B,C and then ask for the input on bottom   -> Between the explanation and the next button
+
+## Compare all of the simulus - 50 in each conditon
+
+
+
+# This was in the CSS for some reason or other... who knows.
+
+button2 {
+	background: url(images/button-gradient.png);
+	border: 1px solid #999;
+	border-top: 1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	margin: 40px;
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 29px;
+	min-width: 70px;
+}
+
+
+
+
+%%%%%%%%
+
+
+Relevant Git comands:
+
+git remote set-url origin https://github.com/algekalipso1/cleanPragmods.git
+
+git remote add origin git@github.com:algekalipso1/cleanPragmods.gitgit commit -am "Adding twitter link"
+
+git commit -am "First attempt"
+
+git push -u origin master
+
+%%%%%%%
+
+
+For maintainance:
+
+git add -a
+git pull
+git commit -m "what you changed/added"
+git push
+
+
+%%%%%%%
+
+
+Finish up the One word design for all stimuli in the three participant input condition. ALL the items.
+
+14 more experiments.
+
+John says: 
+
+
+Factor axis 
+
+Experiment 1: All 6 of the items -> Forced choice
+
+
+My favorite
+
+
+
+
+My least favorite # Without any descriptor
+
+Unique neutral identifier
+
+
+
+
+Proposal for estimating Alpha. Three stages.

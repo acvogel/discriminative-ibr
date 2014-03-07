@@ -1,0 +1,140 @@
+<!DOCTYPE html> <!-- You need to add this line so that IE renders fun CSS style stuff like unchosen:hover -->
+<html>
+  <head>
+    <title>What is he talking about?</title>
+
+    <!-- What does this js script do? -->
+    <script src="jquery.min.js"></script>
+
+    <!--mmturkey manages submitting data to Mechanical Turk. This defines a global object, turk, and attaches five properties to it, hitId, assignmentId, workerId, previewMode, and turkSubmitTo. It also provides a single method, submit(data), which you use to submit data to Turk. If no submission URL has been provided (because, e.g. you're testing your code outside of the Turk environment), submit displays what would have been submitted (without, obviously, any Turk-specific variables like workerId and assignmentId). -->
+    <script src="mmturkey.js"></script>
+
+    <!-- What does this js script do? -->
+    <script src="underscore-min.js"></script>
+
+    <!-- The CSS stylesheet. Very conventional.  -->
+    <link rel="stylesheet" href="style.css"/>
+
+    <!-- What does this meta do? -->
+    <meta name="viewport" content="initial-scale=1.0" />
+  </head>
+
+  <body>
+
+
+    <!-- This is the introduction slide with the Start button, the introduction and the legal text. I.e. the "instructions" slide. -->
+    <div class="slide" id="instructions">
+      <img src="images/stanford.png" alt="Stanford University">
+      <p id='logo-text'>Stanford Language and Cognition Lab</p>
+      <p class="block-text">In this experiment, we're interested in your judgments about what people are talking about. We'll introduce you to a person and some of the things he does, and then ask you to make judgments about what he means. It should take less than 2 - 3 minutes. </p>
+
+      <!-- If there is a familiarization stage then the next line should be active, otherwise the one after that should be active-->
+      <button type="button" onClick="this.blur(); experiment.next_familiarization()">Start</button>
+      
+
+      <!-- <button type="button" onClick="this.blur(); experiment.next_test()">Start</button> -->
+
+
+      <p class="block-text"> <b> (Note: you won't be able to preview this HIT before accepting it because it's so short.) 
+
+      </b></p>
+      <p class="block-text" id="legal">By answering the
+      following questions, you are participating in a study being performed by
+      cognitive scientists in the Stanford Department of Psychology. If you have
+      questions about this research, please contact us at 
+      <a href="mailto://languagecoglab@gmail.com.">languagecoglab@gmail.com</a>.
+      You must be  at least 18 years old to participate. Your participation in 
+      this research is voluntary. You may decline to answer any or all of the 
+      following questions. You may decline further participation, at any time, 
+      without adverse consequences. Your anonymity is assured; the researchers 
+      who have requested your participation will not receive any personal information 
+      about you. Note however that we have recently been made aware that your public 
+      Amazon.com profile can be accessed via your worker ID if you do not choose 
+      to opt out. If you would like to opt out of this feature, you may follow instructions available 
+      <a href="http://www.amazon.com/gp/help/customer/display.html?nodeId=16465241">here</a>.</p>
+    </div>
+
+    <!-- This part is called the "Familiarization Task".
+    This slide shows the n objects that will compose the different objective base rates for the object varieties. 
+    When the familiarization_status variably is set to 0 images are not displayed, and when 
+    familiarization_status == 1 there are 9  stimulusimages that the user needs to click one at a time
+    to be able to proceed to the "stage" slide-->
+    <div class="slide" id="prestage">
+      <p class="block-text">Meet Bob:
+      <img src="images/guy.jpg" width=75px alt="Bob"></p>
+      <div id="familiarizationText"> </div> <!--dynamically built in javascript-->
+      <div id="famObjects"> </div> <!--dynamically built in javascript-->
+      <table align="center"><tr><td align="center">
+        <button type="button" id="famNextButton" onClick="experiment.check_fam()">Next</button>
+        </td></tr>
+        <tr><td align="center">
+        <div id="famMessage"> </div>
+        </td></tr>
+      </table>
+    </div>
+    
+
+
+
+    <!-- This is the slide that tests the *pragmatically* relevant inferences on the subject. THE MAIN TEST so to speak-->
+    <div class="slide" id="stage">
+      <div id="setup"> </div> <!--dynamically built in javascript-->
+      <div id="objects"> </div> <!--dynamically built in javascript-->
+      <div id="manipCheck"> </div> <!--dynamically built in javascript-->
+      <div id="labelInst"> </div> <!--dynamically built in javascript-->
+      <div id="userSelectionInputFields"> </div> <!--The fields where the user expreses his/her decision/s -->
+      <table align="center"><tr><td align="center">
+      <button type="button" id="testNextButton" onClick="experiment.check_test()">Next</button>
+      </td></tr>
+      <tr><td align="center">
+      <div id="testMessage"> </div>
+      </td></tr></table>
+    </div>
+
+
+
+
+    <!-- This is the slide tha asks the experimental subject what the task might have been about. In addition, it fills in relevant variables "about" and "comments" which are returned to Turk. -->
+    <div class="slide" id="check">
+      <p class="block-text"> 
+        Who did you meet in this survey? :
+        <input type="radio" id="namecheck3" name="namecheckCorrect" value="3"> Joe
+        <input type="radio" id="namecheck2" name="namecheckCorrect" value="2"> Tim
+        <input type="radio" id="namecheck1" name="namecheckCorrect" value="1"> Bob  <!-- This is the correct choice, and hence it has a 1 because it tells us that the person was right about "the person he met" -->
+      	<input type="radio" id="namecheck4" name="namecheckCorrect" value="4"> Hal
+      </p>
+      <p class="block-text">
+        What was this survey about? : <br>
+        <input type="text" id="about" name="about" size="70"> 
+      </p>
+      <p class="block-text" name="comments" >
+        Any other comments for us? : <br>
+        <input type="text" id="comments" name="comments" size="70"> 
+      </p>
+      <table align="center"><tr><td align="center">
+        <button type="button" id="checkFinishedButton" onClick="experiment.check_finished()">Finished</button>
+        <div id="checkMessage"> </div><!--dynamically built in javascript-->
+        </td></tr></table>
+    </div>
+
+    <div class="slide" id="finished">
+      <p class="block-text">
+        You're finished - thanks for participating! Submitting to Mechanical Turk...
+      </p>
+    </div>
+
+    <!-- The js scripts delaration section. To improve functionality there are a few js scripts so that parameters can be more easily set and functions be edited. The first one is pragmods_helper_functions_c1.js which contains simple functions. Note that these .js need to be declared in a proper order. -->
+    <script src="pragmods_helper_functions_c2.js"></script>
+
+    <!-- This .js file will set the variable random parameters of the experiment. When it comes to vectorize the parameters of the experiment using this -->
+    <script src="pragmods_parameter_setter_c2.js"></script>
+
+    <!-- This .js file is in charge of controlling the dynamic glow of the activities including constructing the text that is used in the familiarization task and -->
+    <script src="pragmods_control_flow_c2.js"></script>
+
+    <!-- It is expected that a general experiment builder will be added here in the end. Most
+    likely it will be a .js file, but it may also be encoded some other way, perhaps as a command line
+    tool, or somethig akin to the submiterator, which *generates* a shell script based on the parameter
+    that you want. Ask Mickael about it, to see what is the most convinient. -->
+  </body>
+</html>

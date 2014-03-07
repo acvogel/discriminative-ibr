@@ -1,0 +1,144 @@
+
+
+Click on the Christmas tree you think is Bob's favorite.
+
+You have $100 you can use to bet on the sundaes you think may be Bob's favorite, by distributing your $100 among the options. In other words, distribute the money among the options according to how likely you think each option is to be Bob's favorite. Make sure your bets add to $100.
+
+Original version:
+You have $100 you can use to bet on the friends you think may be Bob's favorite, by distributing your $100 among the options. In other words, distribute the money among the options according to how likely you think each option is Bob's favorite. Make sure your bets add to $100.
+
+
+Edited version (after the first two rounds of experiments):
+You have $100 you can use to bet on the friends you think may be Bob's favorite: Distribute your $100 among the options by how likely you think that each of the options is Bob's favorite. (Make sure your bets add to $100).
+
+In a scale from 1 to 7, for each friend choose the level of confidence that you have that it is Bob's favorite. Here 1 means "very confident that it is not his favorite", 7 means "very confident that it is his favorite" and 4 means that you are not sure one way or the other.
+
+
+Bob can only say one word [to communicate with you]
+
+Start with the level 1 matrix
+
+
+[1]: http://www.last.fm/user/davidpearce/library
+[2]: http://www.youtube.com/watch?v=QbBBczzDeCA
+[3]: http://www.spiegel.de/international/world/the-pain-of-listening-using-music-as-a-weapon-at-guantanamo-a-672177.html
+[4]: http://www.youtube.com/watch?v=psAEKsABSB4
+[5]: http://www.abolitionist.com/multiverse.html
+
+
+MTURK_CMD_HOME environment variable
+
+path = /Users/andesgomez/Documents/Stanford/Autumn2013-Masters/PayedWork
+
+
+export JAVA_HOME=/Library/Java/Home
+export MTURK_CMD_HOME=/Users/andesgomez/Documents/Stanford/Autumn2013-Masters/PayedWork/aws-mturk-clt-1.3.1
+
+
+scp -r images nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+scp * nc07agom@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+scp *_c1* mcfrank@cardinal.stanford.edu:/afs/ir/group/langcog/WWW/expts/pragmods
+
+
+
+
+
+
+
+
+
+
+
+Comments:
+
+Some people have reported problems.
+
+
+*Andres Gomez Emilsson* Homework 4 - Psych 252 
+Due date: November 8 - handed in November 10
+========================================================
+
+
+Question A
+-----------------------------------------
+### QA, a
+
+```{r A_a}
+families <- read.csv(url("http://www.stanford.edu/class/psych252/data/families.csv"))
+
+families_linear = lm(empsatis ~ famprog + perfam, data = families)
+summary(families_linear)
+
+cor(families)
+
+families_with_interaction = lm(empsatis ~ famprog * perfam, data = families)
+summary(families_with_interaction)
+
+summary(families)
+
+```
+
+As we can see, the simple linear model does not account for the employee satisfaction. Neither famprog or perfam have a p-value below 0.05 as regressors, and the regession on the whole has only a p-value of 0.083. However when interaction allowed, perfam and famprog:perfam become statistically significant predictors, and the entire regression has a p-value of 0.028.
+
+### QA, b
+
+```{r A_b}
+coplot(empsatis ~ famprog | perfam, families)
+```
+
+We can see in the coplot how the higher the perfam variable is, the more linear the scatter plot seems. 
+
+### QA, c
+
+The larger the percentage of employees with families, the more related ae the number of family friendly programs and the employee satisfaction
+
+### QA, d
+
+Yes, and the way this is happening is probably by increasing the number of employees who may benefit from the family friendly programs.
+
+```{r A_d}
+
+percent_family_mean = mean(families$perfam)
+percent_family_sd = sd(families$perfam)
+
+standard_deviation_family_intervals = c(percent_family_mean - percent_family_sd, percent_family_mean + 1*percent_family_sd)
+
+families$percentinterval = findInterval(families$perfam, standard_deviation_family_intervals)
+
+mean_satisfaction_low_family_percent = mean(families[families$percentinterval == 0,]$empsatis)
+mean_satisfaction_mid_family_percent = mean(families[families$percentinterval == 1,]$empsatis)
+mean_satisfaction_high_family_percent = mean(families[families$percentinterval == 2,]$empsatis)
+
+print(summary(lm(empsatis ~ famprog, data = families[families$percentinterval == 0,])))
+print(summary(lm(empsatis ~ famprog, data = families[families$percentinterval == 1,])))
+print(summary(lm(empsatis ~ famprog, data = families[families$percentinterval == 2,])))
+
+standard_deviation_family_intervals_higher = c(percent_family_mean - percent_family_sd, percent_family_mean + 1.2*percent_family_sd)
+families$percentintervalhigher = findInterval(families$perfam, standard_deviation_family_intervals_higher)
+print(summary(lm(empsatis ~ famprog, data = families[families$percentintervalhigher == 2,])))
+```
+
+
+### QA, e
+We divide the companies into three groups according to whether they are below, aborve or between one and minus one standar deviation from the mean of perecent employees with families. Even in these subgroups we do not find that the regressions between employee satisfaction and the number of family friendly programs is significant at the p < 0.05 level.
+
+However, if we extend the cuttoff for the high family percentage group a little bit then statistical significance is reached: For the subgroup of companies at or above 1.2 standard deviations above the mean of family percentage the linear regression has a p-value of 0.044.
+
+Hence we can reason that the relationship is likely to exist, although it not very prominent, on the one hand, and it is clearly observable only in the groups above 1.2 standard deviations fof the perfam variable.
+
+### QA, f
+
+Out of 68 families, we only get a significant relationship betwen the employee satisfaction and the family friendly programs when we consider about 6 to 8 of the top companies in terms of percent of employees with families. 
+
+More concretly, we observe significance in this relationship for companies with a percentage of employess with families above 67%. We can point out that the significance of the regression with this subset is only about p = 0.4, whereas the regression that included the perfam variable as a regressor had a p-value of 0.028. We can imagine, therefore, that while the effect remains the most visible in the companies with many family employees, the overall relationship does exist in companies across the board - but only an interaction regression can reveal it.
+
+
+Question B
+-----------------------------------------
+### QB, a
+```{r B}
+
+```
+
