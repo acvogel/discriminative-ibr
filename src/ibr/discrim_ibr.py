@@ -158,7 +158,10 @@ def initNetwork(layerSizes):
   """Builds a network with hidden layer sizes specified in the argument. 
      Output is a linear layer of 3 outputs, input layer has numFeatures.
      Intermediate layers are all sigmoids. 
+     If layerSizes is empty, this function instead returns a multi-class maxent model.
   """
+  if len(layerSizes) == 0:
+    return initMaxentNetwork()
   fnn = FeedForwardNetwork()
   inLayer = LinearLayer(numFeatures)
   fnn.addInputModule(inLayer)
@@ -171,6 +174,21 @@ def initNetwork(layerSizes):
   # iterate over successive pairs of layers
   for layer1, layer2 in zip(allLayers[:-1], allLayers[1:]): 
     fnn.addConnection(FullConnection(layer1, layer2))
+  fnn.sortModules()
+  return fnn
+
+
+# todo: modification so initNetwork can make a single layer sigmoid network i.e. maxent. perhaps if layerSizes is empty? hrm. 
+# or make a completely different function
+
+def initMaxentNetwork():
+  """Builds a network with just a sigmoid output layer, i.e. a multi-class maximum entropy model."""
+  fnn = FeedForwardNetwork()
+  inLayer = LinearLayer(numFeatures)
+  fnn.addInputModule(inLayer)
+  outLayer = SigmoidLayer(3)
+  fnn.addOutputModule(outLayer)
+  fnn.addConnection(FullConnection(inLayer, outLayer))
   fnn.sortModules()
   return fnn
 
@@ -201,7 +219,7 @@ def trainListener(problems, speaker, hiddenNodes=[24]):
 
 
 
-#### convience functions ####
+#### convenience functions ####
 
 def featuresToString(features):
   """Pretty print features.
@@ -782,7 +800,10 @@ if __name__ == '__main__':
   if len(sys.argv) > 2 and sys.argv[1] == 'train' and len(sys.argv) >= 5:
     outPath = sys.argv[2]
     nIterations = int(sys.argv[3])
-    hiddenNodes = [int(n) for n in sys.argv[4:]]
+    if int(sys.argv[4]) == 0: # if hiddenNodes is just 1 zero, train a maxent.
+      hiddenNodes = []
+    else:
+      hiddenNodes = [int(n) for n in sys.argv[4:]]
     trainAllAgents('../../data/facesInstances.csv', outPath, hiddenNodes, nIterations)
   elif len(sys.argv) > 2 and sys.argv[1] == 'eval' and len(sys.argv) == 3:
     syntheticExperiments(sys.argv[2], overall=False, errorBars=True)
